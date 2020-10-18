@@ -25,6 +25,8 @@ const typeDefs = `
     }
 `
 
+const events = [{ _id: '12asdasd', title: "tit1", description: "desc1", price: 15.99, date: "25-11-2019" }]
+
 // Resolvers
 const resolvers = {
     Query: {
@@ -32,15 +34,15 @@ const resolvers = {
             return "This is my first Query!"
         },
         events() {
-            return [
-                { _id: '12asdasd', title: "tit1", description: "desc1", price: 15.99, date: "25-11-2019" }
-            ]
+            return events
         }
     },
     Mutation: {
         createEvent(parent, { input }, ctx, info) {
             const id = v4()
-            return { _id: id , title: input.title , description: input.description , price: input.price , date: input.date }
+            const newEvent = { _id: id, title: input.title, description: input.description, price: input.price, date: input.date }
+            events.push(newEvent)
+            return newEvent
         }
     }
 }
