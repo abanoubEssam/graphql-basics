@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js --exec babel-node",
+    "start": "nodemon src/index.js js,graphql --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Abanoub Essam",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.7.36",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "graphql-yoga": "^1.18.3",
+    "mongoose": "^5.10.9",
     "nodemon": "^2.0.5",
     "uuid": "^8.3.1"
   }
