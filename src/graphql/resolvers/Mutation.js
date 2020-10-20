@@ -1,3 +1,4 @@
+import { BookingModel } from "../../models/booking";
 import { EventModel } from "../../models/event"
 import { UserModel } from "../../models/user"
 const bcrypt = require('bcryptjs');
@@ -28,5 +29,16 @@ export const Mutation = {
             email: input.email,
             password: hashedPassword
         })
+    },
+    async bookEvent(parent, { input }, ctx, info) {
+        const event = await EventModel.findById(input.eventId)
+        if (!event) {
+            throw new Error('event not found')
+        }
+        const user = await UserModel.findById(input.userId)
+        if (!user) {
+            throw new Error('user not found')
+        }
+        return await BookingModel.create({ user: input.userId, event: input.eventId })
     }
 }

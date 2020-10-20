@@ -1,3 +1,10 @@
+type Booking {
+	_id: ID!
+	event: Event!
+	user: User!
+	createdAt: String!
+	updatedAt: String!
+}
 type Event {
 	_id: ID!
 	title: String!
@@ -5,6 +12,7 @@ type Event {
 	price: Float!
 	date: String!
 	creator: User!
+	# bookings: [Booking]
 }
 type User {
 	_id: ID!
@@ -16,6 +24,10 @@ input UserInput {
 	email: String!
 	password: String!
 }
+input BookingInput {
+	eventId: ID!
+	userId: ID!
+}
 input EventInput {
 	title: String!
 	description: String!
@@ -26,8 +38,10 @@ input EventInput {
 type Query {
 	events: [Event!]!
 	users: [User!]!
+	bookings: [Booking!]!
 }
 type Mutation {
 	createEvent(input: EventInput ): Event!
 	createUser(input: UserInput ): User!
+	bookEvent(input: BookingInput): Booking!
 }
