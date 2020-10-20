@@ -1,13 +1,27 @@
 import { BookingModel } from "../../models/booking";
 import { EventModel } from "../../models/event"
 import { UserModel } from "../../models/user"
+import { getUser } from "../../utils/getUser";
 const bcrypt = require('bcryptjs');
 
 export const Mutation = {
-    async createEvent(parent, { input }, ctx, info) {
+    async createEvent(parent, { input }, { request }, info) {
+        let {
+            userId,
+            email,
+            iat,
+            exp
+        } = getUser(request)
+
+
         const user = await UserModel.findById(input.creator)
         if (!user) {
             throw new Error("User Does not Exists")
+        }
+        console.log("createEvent -> user._id", user._id)
+        console.log("createEvent -> userId", userId)
+        if (user._id != userId) {
+            throw new Error("Not allowed !")
         }
         const event = await EventModel.create({
             title: input.title,
@@ -40,5 +54,13 @@ export const Mutation = {
             throw new Error('user not found')
         }
         return await BookingModel.create({ user: input.userId, event: input.eventId })
+    },
+    async cancelBooking(parent, { bookingId }, ctx, info) {
+        const booking = await BookingModel.findById(bookingId)
+        if (!booking) {
+            throw new Error("Booking Not Found")
+        }
+        return await BookingModel.findByIdAndUpdate(bookingId, { cancelled: true }, { new: true })
+
     }
 }

@@ -10,6 +10,10 @@ const bookingSchema = new mongoose.Schema({
     event: {
         type: mongoose.Schema.Types.ObjectId,
         ref: EVENT_MODEL_NAME
+    },
+    cancelled: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 

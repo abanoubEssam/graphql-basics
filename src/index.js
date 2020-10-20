@@ -9,7 +9,13 @@ const server = new GraphQLServer({
     resolvers: {
         Mutation,
         Query
-    }
+    },
+    context(request) {
+        return {
+            request
+        }
+    },
+    middlewares: []
 })
 
 
